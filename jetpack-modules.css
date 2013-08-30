@@ -1,0 +1,31 @@
+.jetpack-modules #icon {
+	width: 90px;
+}
+
+.jetpack-modules #name {
+	width: 20%;
+}
+
+.jetpack-modules .description .more-info-link {
+	
+}
+
+.jetpack-modules .description .more-info {
+	display: none;
+}
+
+.jetpack-modules .jetpack-module {
+	position: static;
+	float: none;
+	width: auto;
+	min-height: inherit;
+	max-height: inherit;
+	margin: 0;
+	border: none;
+	border-radius: 0;
+	background: none;
+	padding: 0;
+	box-shadow: none;
+	-webkit-transition-duration: 0;
+	transition-duration:         0;
+}
