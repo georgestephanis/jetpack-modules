@@ -1,5 +1,5 @@
 .jetpack-modules #icon {
-	width: 90px;
+	width: 80px;
 }
 
 .jetpack-modules #name {
@@ -33,4 +33,8 @@
 
 .jetpack-modules .jetpack-module.alternate {
 	background: #f9f9f9;
+}
+
+.jetpack-modules .jetpack-module .module-image {
+	margin: 0;
 }

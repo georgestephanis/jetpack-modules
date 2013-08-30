@@ -100,7 +100,7 @@ class Jetpack_Modules extends WP_List_Table {
 	function get_columns() {
 		$columns = array(
 			'cb'          => '<input type="checkbox" />',
-			'icon'        => __( 'Icon',        'jetpack' ),
+			'icon'        => '',
 			'name'        => __( 'Name',        'jetpack' ),
 			'description' => __( 'Description', 'jetpack' ),
 		);
