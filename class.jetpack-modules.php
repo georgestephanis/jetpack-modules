@@ -146,7 +146,29 @@ class Jetpack_Modules extends WP_List_Table {
 				<?php
 				return ob_get_clean();
 			case 'name':
-				return $item['name'];
+				$actions = array();
+				if ( empty( $item['activated'] ) ) {
+					$url = wp_nonce_url(
+						$this->jetpack->admin_url( array(
+							'page'   => 'jetpack',
+							'action' => 'activate',
+							'module' => $item['module'],
+						) ),
+						'jetpack_activate-' . $item['module']
+					);
+					$actions['activate'] = sprintf( '<a href="%s">%s</a>', esc_url( $url ), esc_html__( 'Activate', 'jetpack' ) );
+				} else {
+					$url = wp_nonce_url(
+						$this->jetpack->admin_url( array(
+							'page'   => 'jetpack',
+							'action' => 'deactivate',
+							'module' => $item['module'],
+						) ),
+						'jetpack_deactivate-' . $item['module']
+					);
+					$actions['delete'] = sprintf( '<a href="%s">%s</a>', esc_url( $url ), esc_html__( 'Deactivate', 'jetpack' ) );
+				}
+				return $item['name'] . $this->row_actions( $actions );
 			case 'description':
 				$short_desc = apply_filters( 'jetpack_short_module_description', $item['description'], $item['module'] );
 				ob_start();
