@@ -81,6 +81,15 @@ class Jetpack_Modules extends WP_List_Table {
 				$this->display();
 			?>
 
+			<script>
+			jQuery(document).ready(function($){
+				$('.more-info-link').click(function(e){
+					e.preventDefault();
+					$(this).siblings('.more-info').toggle();
+				});
+			});
+			</script>
+
 			<!-- <pre><?php var_dump( $this->items ); ?></pre> -->
 
 		</div>
