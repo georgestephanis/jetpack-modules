@@ -29,3 +29,8 @@
 	-webkit-transition-duration: 0;
 	transition-duration:         0;
 }
+
+
+.jetpack-modules .jetpack-module.alternate {
+	background: #f9f9f9;
+}
