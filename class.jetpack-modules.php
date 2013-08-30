@@ -110,7 +110,7 @@ class Jetpack_Modules extends WP_List_Table {
 		static $row_class = '';
 		$row_class = empty( $row_class ) ? ' alternate' : '';
 
-		$active = empty( $item['active'] ) ? '' : ' active';
+		$active = empty( $item['activated'] ) ? '' : ' active';
 
 		echo '<tr class="jetpack-module' . $row_class . $active . '" id="' . $item['module'] . '">';
 		$this->single_row_columns( $item );
