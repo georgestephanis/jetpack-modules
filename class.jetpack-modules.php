@@ -122,6 +122,7 @@ class Jetpack_Modules extends WP_List_Table {
 			'cb'          => '<input type="checkbox" />',
 			'icon'        => '',
 			'name'        => __( 'Name',        'jetpack' ),
+			'module_tags' => __( 'Module Tags', 'jetpack' ),
 			'description' => __( 'Description', 'jetpack' ),
 		);
 		return $columns;
@@ -212,6 +213,14 @@ class Jetpack_Modules extends WP_List_Table {
 			do_action( 'jetpack_module_more_info_' . $item['module'] );
 		}
 		return ob_get_clean();
+	}
+
+	function column_module_tags( $item ) {
+		$module_tags = array();
+		foreach( $item['module_tags'] as $module_tag ) {
+			$module_tags[] = sprintf( '<a href="%2$s">%1$s</a>', esc_html( $module_tag ), add_query_arg( 'module_tag', urlencode( $module_tag ) ) );
+		}
+		return implode( ', ', $module_tags );
 	}
 
 	function column_default( $item, $column_name ) {
