@@ -88,7 +88,7 @@ class Jetpack_Modules extends WP_List_Table {
 			});
 			</script>
 
-			<!-- <pre><?php var_dump( $this->items ); ?></pre> -->
+			<script>var jetpackModules = <?php echo json_encode( $this->items ); ?>;</script>
 
 		</div>
 
