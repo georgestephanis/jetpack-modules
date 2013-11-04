@@ -23,6 +23,7 @@ class Jetpack_Modules extends WP_List_Table {
 
 		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_admin_menu'    ) );
 		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_settings_menu' ) );
+		add_filter( 'jetpack_modules_list_table_items', array( $this, 'filter_displayed_table_items' ) );
 	}
 
 	function jetpack_admin_menu() {
@@ -63,7 +64,11 @@ class Jetpack_Modules extends WP_List_Table {
 			}
 		}
 
-		usort( $modules, array( $this->jetpack, 'sort_modules' ) );
+		uasort( $modules, array( $this->jetpack, 'sort_modules' ) );
+
+		if ( ! Jetpack::is_active() ) {
+			uasort( $modules, array( __CLASS__, 'sort_requires_connection_last' ) );
+		}
 
 		return $modules;
 	}
@@ -87,12 +92,14 @@ class Jetpack_Modules extends WP_List_Table {
 			<?php do_action( 'jetpack_notices' ) ?>
 
 			<?php
-				$this->items = $this->get_modules();
+				$this->items = $this->all_items = $this->get_modules();
+				$this->items = apply_filters( 'jetpack_modules_list_table_items', $this->items );
 				$this->_column_headers = array( $this->get_columns(), array(), array() );
 				$this->display();
 			?>
 
 			<script>
+			var jetpackModules = <?php echo json_encode( $this->all_items ); ?>;
 			jQuery(document).ready(function($){
 				$('.more-info-link').click(function(e){
 					e.preventDefault();
@@ -100,8 +107,6 @@ class Jetpack_Modules extends WP_List_Table {
 				});
 			});
 			</script>
-
-			<!-- <pre><?php var_dump( $this->items ); ?></pre> -->
 
 		</div>
 
@@ -126,6 +131,10 @@ class Jetpack_Modules extends WP_List_Table {
 		<?php
 	}
 
+	function filter_displayed_table_items( $modules ) {
+		return array_filter( $modules, array( $this, 'is_module_displayed' ) );
+	}
+
 	static function is_module_available( $module ) {
 		if ( ! is_array( $module ) || empty( $module ) )
 			return false;
@@ -133,11 +142,35 @@ class Jetpack_Modules extends WP_List_Table {
 		return ! ( $module['requires_connection'] && ! Jetpack::is_active() );
 	}
 
+	static function is_module_displayed( $module ) {
+		// Handle module tag based filtering.
+		if ( ! empty( $_REQUEST['module_tag'] ) ) {
+			$module_tag = sanitize_text_field( $_REQUEST['module_tag'] );
+			if ( ! in_array( $module_tag, $module['module_tags'] ) )
+				return false;
+		}
+
+		// If nothing rejected it, include it!
+		return true;
+	}
+
+	static function sort_requires_connection_last( $module1, $module2 ) {
+		if ( $module1['requires_connection'] == $module2['requires_connection'] )
+			return 0;
+		if ( $module1['requires_connection'] )
+			return 1;
+		if ( $module2['requires_connection'] )
+			return -1;
+
+		return 0;
+	}
+
 	function get_columns() {
 		$columns = array(
 			'cb'          => '<input type="checkbox" />',
 			'icon'        => '',
 			'name'        => __( 'Name',        'jetpack' ),
+			'module_tags' => __( 'Module Tags', 'jetpack' ),
 			'description' => __( 'Description', 'jetpack' ),
 		);
 		return $columns;
@@ -228,6 +261,14 @@ class Jetpack_Modules extends WP_List_Table {
 			do_action( 'jetpack_module_more_info_' . $item['module'] );
 		}
 		return ob_get_clean();
+	}
+
+	function column_module_tags( $item ) {
+		$module_tags = array();
+		foreach( $item['module_tags'] as $module_tag ) {
+			$module_tags[] = sprintf( '<a href="%2$s">%1$s</a>', esc_html( $module_tag ), add_query_arg( 'module_tag', urlencode( $module_tag ) ) );
+		}
+		return implode( ', ', $module_tags );
 	}
 
 	function column_default( $item, $column_name ) {
