@@ -22,8 +22,8 @@ class Jetpack_Modules extends WP_List_Table {
 		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_admin_menu' ) );
 	}
 
-	function jetpack_admin_menu() {
-		$hook = add_submenu_page( 'jetpack', __( 'Jetpack Modules', 'jetpack' ), __( 'Modules', 'jetpack' ), 'manage_options', 'jetpack_modules', array( $this, 'admin_page_modules' ) );
+	function jetpack_admin_menu( $jetpack_hook ) {
+		$hook = add_submenu_page( $jetpack_hook, __( 'Jetpack Modules', 'jetpack' ), __( 'Modules', 'jetpack' ), 'manage_options', 'jetpack_modules', array( $this, 'admin_page_modules' ) );
 
 		add_action( "load-$hook",                array( $this->jetpack, 'admin_page_load' ) );
 		add_action( "load-$hook",                array( $this->jetpack, 'admin_help'      ) );
