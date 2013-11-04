@@ -183,5 +183,3 @@ class Jetpack_Modules extends WP_List_Table {
 		}
 	}
 }
-
-add_action( 'plugins_loaded', array( 'Jetpack_Modules', 'init' ) );
