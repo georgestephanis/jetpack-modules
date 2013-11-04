@@ -30,6 +30,9 @@
 	transition-duration:         0;
 }
 
+.jetpack-modules .jetpack-module.unavailable td {
+	opacity: 0.3;
+}
 
 .jetpack-modules .jetpack-module.alternate {
 	background: #f9f9f9;
