@@ -177,7 +177,8 @@ class Jetpack_Modules extends WP_List_Table {
 				$actions['delete'] = sprintf( '<a href="%s">%s</a>', esc_url( $url ), esc_html__( 'Deactivate', 'jetpack' ) );
 			}
 		}
-		return $item['name'] . $this->row_actions( $actions );
+
+		return wptexturize( $item['name'] ) . $this->row_actions( $actions );
 	}
 
 	function column_description( $item ) {
