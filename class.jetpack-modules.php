@@ -132,6 +132,7 @@ class Jetpack_Modules extends WP_List_Table {
 		add_filter( 'jetpack_short_module_description', 'wpautop' );
 		include_once( JETPACK__PLUGIN_DIR . 'modules/module-info.php' );
 		parent::__construct();
+		add_thickbox();
 		?>
 
 		<div class="wrap" id="jetpack-settings">
@@ -269,9 +270,11 @@ class Jetpack_Modules extends WP_List_Table {
 		$badge_text = $free_text = '';
 		ob_start();
 		?>
-		<div class="module-image">
-			<p><span class="module-image-badge"><?php echo $badge_text; ?></span><span class="module-image-free" style="display: none"><?php echo $free_text; ?></span></p>
-		</div>
+		<a href="#TB_inline?width=600&height=550&inlineId=more-info-<?php echo $item['module']; ?>" class="thickbox">
+			<div class="module-image">
+				<p><span class="module-image-badge"><?php echo $badge_text; ?></span><span class="module-image-free" style="display: none"><?php echo $free_text; ?></span></p>
+			</div>
+		</a>
 		<?php
 		return ob_get_clean();
 
