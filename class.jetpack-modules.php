@@ -192,9 +192,8 @@ class Jetpack_Modules extends WP_List_Table {
 				</div>
 			</div>
 
-			<?php do_action( 'jetpack_notices' ) ?>
-
 			<?php
+				do_action( 'jetpack_notices' );
 				$this->items = $this->all_items = $this->get_modules();
 				$this->items = apply_filters( 'jetpack_modules_list_table_items', $this->items );
 				$this->_column_headers = array( $this->get_columns(), array(), array() );
@@ -202,6 +201,10 @@ class Jetpack_Modules extends WP_List_Table {
 
 			<form method="get">
 				<input type="hidden" name="page" value="jetpack_modules" />
+				<?php if ( ! empty( $_GET['module_tag'] ) ) : ?>
+					<input type="hidden" name="module_tag" value="<?php echo esc_attr( $_GET['module_tag'] ); ?>" />
+				<?php endif; ?>
+				<?php $this->search_box( __( 'Search', 'jetpack' ), 'search_modules' ); ?>
 				<?php $this->display(); ?>
 			</form>
 
