@@ -19,7 +19,7 @@ class Jetpack_Modules extends WP_List_Table {
 	function __construct() {
 		$this->jetpack = Jetpack::init();
 
-		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_admin_menu' ) );
+		add_action( 'jetpack_admin_menu',               array( $this, 'jetpack_admin_menu' ) );
 		add_filter( 'jetpack_modules_list_table_items', array( $this, 'filter_displayed_table_items' ) );
 	}
 
