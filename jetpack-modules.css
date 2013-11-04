@@ -38,3 +38,12 @@
 .jetpack-modules .jetpack-module .module-image {
 	margin: 0;
 }
+
+.jetpack-modules .more-info {
+	margin: 0 0 5px;
+	background: none;
+	background-color: transparent !important;
+	border: none !important;
+	height: auto;
+	box-shadow: none !important;
+}
