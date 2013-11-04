@@ -79,13 +79,14 @@ class Jetpack_Modules extends WP_List_Table {
 			<?php do_action( 'jetpack_notices' ) ?>
 
 			<?php
-				$this->items = $this->get_modules();
+				$this->items = $this->all_items = $this->get_modules();
 				$this->items = apply_filters( 'jetpack_modules_list_table_items', $this->items );
 				$this->_column_headers = array( $this->get_columns(), array(), array() );
 				$this->display();
 			?>
 
 			<script>
+			var jetpackModules = <?php echo json_encode( $this->all_items ); ?>;
 			jQuery(document).ready(function($){
 				$('.more-info-link').click(function(e){
 					e.preventDefault();
@@ -93,8 +94,6 @@ class Jetpack_Modules extends WP_List_Table {
 				});
 			});
 			</script>
-
-			<script>var jetpackModules = <?php echo json_encode( $this->items ); ?>;</script>
 
 		</div>
 
