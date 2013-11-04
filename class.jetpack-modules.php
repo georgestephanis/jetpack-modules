@@ -1,7 +1,9 @@
 <?php
 
-if( ! class_exists( 'WP_List_Table' ) )
-	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+require_once 'class.jetpack-modules.php';
+
+if ( ! class_exists( 'WP_List_Table' ) )
+	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 
 class Jetpack_Modules extends WP_List_Table {
 
@@ -19,7 +21,8 @@ class Jetpack_Modules extends WP_List_Table {
 	function __construct() {
 		$this->jetpack = Jetpack::init();
 
-		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_admin_menu' ) );
+		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_admin_menu'    ) );
+		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_settings_menu' ) );
 	}
 
 	function jetpack_admin_menu() {
@@ -31,6 +34,16 @@ class Jetpack_Modules extends WP_List_Table {
 		add_action( "admin_print_styles-$hook",  array( $this->jetpack, 'admin_styles'    ) );
 		add_action( "admin_print_scripts-$hook", array( $this->jetpack, 'admin_scripts'   ) );
 		add_action( "admin_print_styles-$hook",  array( $this, 'admin_styles'             ) );
+	}
+
+	function jetpack_settings_menu() {
+		$hook = add_submenu_page( 'jetpack', __( 'Jetpack Settings', 'jetpack' ), __( 'Settings', 'jetpack' ), 'manage_options', 'jetpack_settings', array( $this, 'admin_page_settings' ) );
+
+		add_action( "load-$hook",                array( $this->jetpack, 'admin_page_load' ) );
+		add_action( "load-$hook",                array( $this->jetpack, 'admin_help'      ) );
+		add_action( "admin_head-$hook",          array( $this->jetpack, 'admin_head'      ) );
+		add_action( "admin_print_styles-$hook",  array( $this->jetpack, 'admin_styles'    ) );
+		add_action( "admin_print_scripts-$hook", array( $this->jetpack, 'admin_scripts'   ) );
 	}
 
 	function admin_styles() {
@@ -95,6 +108,24 @@ class Jetpack_Modules extends WP_List_Table {
 		<?php
 	}
 
+	function admin_page_settings() {
+		?>
+		<div class="wrap">
+			<?php screen_icon( 'options-general' ); ?>
+			<h2><?php _e( 'Jetpack Settings', 'jetpack' ); ?></h2>
+			<?php settings_errors(); ?>
+
+			<form method="post" action="options.php">
+				<?php
+					settings_fields( 'jetpack_options' );
+					do_settings_sections( 'jetpack_options' );
+					submit_button();
+				?>
+			</form>
+		</div>
+		<?php
+	}
+
 	static function is_module_available( $module ) {
 		if ( ! is_array( $module ) || empty( $module ) )
 			return false;
@@ -155,7 +186,7 @@ class Jetpack_Modules extends WP_List_Table {
 		</div>
 		<?php
 		return ob_get_clean();
-		
+
 	}
 
 	function column_name( $item ) {
