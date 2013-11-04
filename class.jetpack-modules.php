@@ -140,6 +140,9 @@ class Jetpack_Modules extends WP_List_Table {
 	}
 
 	function column_cb( $item ) {
+		if ( ! $this->is_module_available( $item ) )
+			return '';
+
 		return sprintf( '<input type="checkbox" name="modules[]" value="%s" />', $item['module'] );
 	}
 
