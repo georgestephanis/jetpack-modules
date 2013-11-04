@@ -26,6 +26,43 @@ class Jetpack_Modules extends WP_List_Table {
 		add_filter( 'jetpack_modules_list_table_items', array( $this, 'filter_displayed_table_items' ) );
 		add_action( 'jetpack_pre_activate_module',      array( $this, 'fix_redirect' ) );
 		add_action( 'jetpack_pre_deactivate_module',    array( $this, 'fix_redirect' ) );
+		add_action( 'jetpack_unrecognized_action',      array( $this, 'handle_unrecognized_action' ) );
+	}
+
+	function handle_unrecognized_action( $action ) {
+		switch( $action ) {
+			case 'bulk-activate' :
+				if ( ! current_user_can( 'manage_options' ) )
+					break;
+
+				$modules = (array) $_GET['modules'];
+				$modules = array_map( 'sanitize_key', $modules );
+				check_admin_referer( 'bulk-jetpack_page_jetpack_modules' );
+				foreach( $modules as $module ) {
+					Jetpack::log( 'activate', $module );
+					Jetpack::activate_module( $module, false );
+				}
+				// The following two lines will rarely happen, as Jetpack::activate_module normally exits at the end.
+				wp_safe_redirect( wp_get_referer() );
+				exit;
+			case 'bulk-deactivate' :
+				if ( ! current_user_can( 'manage_options' ) )
+					break;
+
+				$modules = (array) $_GET['modules'];
+				$modules = array_map( 'sanitize_key', $modules );
+				check_admin_referer( 'bulk-jetpack_page_jetpack_modules' );
+				foreach ( $modules as $module ) {
+					Jetpack::log( 'deactivate', $module );
+					Jetpack::deactivate_module( $module );
+					Jetpack::state( 'message', 'module_deactivated' );
+				}
+				Jetpack::state( 'module', $modules );
+				wp_safe_redirect( wp_get_referer() );
+				exit;
+			default:
+				return;
+		}
 	}
 
 	function fix_redirect() {
@@ -161,8 +198,12 @@ class Jetpack_Modules extends WP_List_Table {
 				$this->items = $this->all_items = $this->get_modules();
 				$this->items = apply_filters( 'jetpack_modules_list_table_items', $this->items );
 				$this->_column_headers = array( $this->get_columns(), array(), array() );
-				$this->display();
 			?>
+
+			<form method="get">
+				<input type="hidden" name="page" value="jetpack_modules" />
+				<?php $this->display(); ?>
+			</form>
 
 			<script>
 			var jetpackModules = <?php echo json_encode( $this->all_items ); ?>;
@@ -245,8 +286,8 @@ class Jetpack_Modules extends WP_List_Table {
 
 	function get_bulk_actions() {
 		$actions = array(
-			'activate'   => __( 'Activate',   'jetpack' ),
-			'deactivate' => __( 'Deactivate', 'jetpack' ),
+			'bulk-activate'   => __( 'Activate',   'jetpack' ),
+			'bulk-deactivate' => __( 'Deactivate', 'jetpack' ),
 		);
 		return $actions;
 	}
