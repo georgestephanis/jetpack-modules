@@ -132,52 +132,63 @@ class Jetpack_Modules extends WP_List_Table {
 		return sprintf( '<input type="checkbox" name="book[]" value="%s" />', $item['module'] );
 	}
 
+	function column_icon( $item ) {
+		$badge_text = $free_text = '';
+		ob_start();
+		?>
+		<div class="module-image">
+			<p><span class="module-image-badge"><?php echo $badge_text; ?></span><span class="module-image-free" style="display: none"><?php echo $free_text; ?></span></p>
+		</div>
+		<?php
+		return ob_get_clean();
+		
+	}
+
+	function column_name( $item ) {
+		$actions = array();
+		if ( empty( $item['activated'] ) ) {
+			$url = wp_nonce_url(
+				$this->jetpack->admin_url( array(
+					'page'   => 'jetpack',
+					'action' => 'activate',
+					'module' => $item['module'],
+				) ),
+				'jetpack_activate-' . $item['module']
+			);
+			$actions['activate'] = sprintf( '<a href="%s">%s</a>', esc_url( $url ), esc_html__( 'Activate', 'jetpack' ) );
+		} else {
+			$url = wp_nonce_url(
+				$this->jetpack->admin_url( array(
+					'page'   => 'jetpack',
+					'action' => 'deactivate',
+					'module' => $item['module'],
+				) ),
+				'jetpack_deactivate-' . $item['module']
+			);
+			$actions['delete'] = sprintf( '<a href="%s">%s</a>', esc_url( $url ), esc_html__( 'Deactivate', 'jetpack' ) );
+		}
+		return $item['name'] . $this->row_actions( $actions );
+	}
+
+	function column_description( $item ) {
+		ob_start();
+		echo apply_filters( 'jetpack_short_module_description', $item['description'], $item['module'] );
+		do_action( 'jetpack_learn_more_button_' . $item['module'] );
+		echo '<div id="more-info-' . $item['module'] . '" class="more-info">';
+		if ( $this->jetpack->is_active() && has_action( 'jetpack_module_more_info_connected_' . $item['module'] ) ) {
+			do_action( 'jetpack_module_more_info_connected_' . $item['module'] );
+		} else {
+			do_action( 'jetpack_module_more_info_' . $item['module'] );
+		}
+		return ob_get_clean();
+	}
+
 	function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'icon':
-				$badge_text = $free_text = '';
-				ob_start();
-				?>
-				<div class="module-image">
-					<p><span class="module-image-badge"><?php echo $badge_text; ?></span><span class="module-image-free" style="display: none"><?php echo $free_text; ?></span></p>
-				</div>
-				<?php
-				return ob_get_clean();
 			case 'name':
-				$actions = array();
-				if ( empty( $item['activated'] ) ) {
-					$url = wp_nonce_url(
-						$this->jetpack->admin_url( array(
-							'page'   => 'jetpack',
-							'action' => 'activate',
-							'module' => $item['module'],
-						) ),
-						'jetpack_activate-' . $item['module']
-					);
-					$actions['activate'] = sprintf( '<a href="%s">%s</a>', esc_url( $url ), esc_html__( 'Activate', 'jetpack' ) );
-				} else {
-					$url = wp_nonce_url(
-						$this->jetpack->admin_url( array(
-							'page'   => 'jetpack',
-							'action' => 'deactivate',
-							'module' => $item['module'],
-						) ),
-						'jetpack_deactivate-' . $item['module']
-					);
-					$actions['delete'] = sprintf( '<a href="%s">%s</a>', esc_url( $url ), esc_html__( 'Deactivate', 'jetpack' ) );
-				}
-				return $item['name'] . $this->row_actions( $actions );
 			case 'description':
-				$short_desc = apply_filters( 'jetpack_short_module_description', $item['description'], $item['module'] );
-				ob_start();
-				do_action( 'jetpack_learn_more_button_' . $item['module'] );
-				echo '<div id="more-info-' . $item['module'] . '" class="more-info">';
-				if ( $this->jetpack->is_active() && has_action( 'jetpack_module_more_info_connected_' . $item['module'] ) ) {
-					do_action( 'jetpack_module_more_info_connected_' . $item['module'] );
-				} else {
-					do_action( 'jetpack_module_more_info_' . $item['module'] );
-				}
-				return $short_desc . ob_get_clean();
+				break;
 			default:
 				return print_r( $item, true );
 		}
