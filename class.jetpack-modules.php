@@ -75,6 +75,7 @@ class Jetpack_Modules extends WP_List_Table {
 
 			<?php
 				$this->items = $this->get_modules();
+				$this->items = array_combine( wp_list_pluck( $this->items, 'module' ), $this->items );
 				$this->_column_headers = array( $this->get_columns(), array(), array() );
 				$this->display();
 			?>
