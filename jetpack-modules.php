@@ -9,6 +9,9 @@
  * Author URI: http://stephanis.info/
  */
 
-if ( is_admin() ) {
-	require_once( dirname(__FILE__) . '/class.jetpack-modules.php' );
+add_action( 'init', 'load_jetpack_modules_class' );
+function load_jetpack_modules_class() {
+    if ( is_admin() && class_exists( 'Jetpack' ) ) {
+        require_once( dirname(__FILE__) . '/class.jetpack-modules.php' );
+    }
 }
