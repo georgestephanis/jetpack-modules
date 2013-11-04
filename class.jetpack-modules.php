@@ -124,9 +124,13 @@ class Jetpack_Modules extends WP_List_Table {
 		static $row_class = '';
 		$row_class = empty( $row_class ) ? ' alternate' : '';
 
-		$active = empty( $item['activated'] ) ? '' : ' active';
+		if ( ! empty( $item['activated'] )  )
+			$row_class .= ' active';
 
-		echo '<tr class="jetpack-module' . $row_class . $active . '" id="' . $item['module'] . '">';
+		if ( ! $this->is_module_available( $item ) )
+			$row_class .= ' unavailable';
+
+		echo '<tr class="jetpack-module' . esc_attr( $row_class ) . '" id="' . esc_attr( $item['module'] ) . '">';
 		$this->single_row_columns( $item );
 		echo '</tr>';
 	}
