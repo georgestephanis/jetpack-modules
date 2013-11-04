@@ -1,6 +1,6 @@
 <?php
 
-require_once 'class.jetpack-modules.php';
+require_once 'class.jetpack-form-elements.php';
 
 if ( ! class_exists( 'WP_List_Table' ) )
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
@@ -45,6 +45,61 @@ class Jetpack_Modules extends WP_List_Table {
 		add_action( "admin_head-$hook",          array( $this->jetpack, 'admin_head'      ) );
 		add_action( "admin_print_styles-$hook",  array( $this->jetpack, 'admin_styles'    ) );
 		add_action( "admin_print_scripts-$hook", array( $this->jetpack, 'admin_scripts'   ) );
+
+		$videopress = Jetpack_Options::get_option( 'videopress', array(
+			'blogs' => array(),
+			'blog_id' => 0,
+			'access' => '',
+			'allow-upload' => false,
+			'freedom' => false,
+			'hd' => false,
+			'meta' => array(
+				'max_upload_size' => 0,
+			),
+		) );
+		add_settings_section( 'videopress', __( 'VideoPress', 'jetpack'), array( $this, 'videopress_description' ), 'jetpack_settings' );
+
+		$blog_id_choices = array( 0 => __( 'None', 'jetpack' ) );
+		foreach ( $videopress['blogs'] as $blog ) {
+			$blog_id_choices[ $blog['blog_id'] ] = $blog['name'];
+		}
+		add_settings_field( 'videopress-blog-id', __( 'Connected WordPress.com Blog', 'jetpack' ), array( 'Jetpack_Form_Elements', 'select' ), 'jetpack_settings', 'videopress', array(
+			'name'    => 'blog_id',
+			'value'   => $videopress['blog_id'],
+			'choices' => $blog_id_choices,
+		) );
+		add_settings_field( 'video-library-access', __( 'Video Library Access', 'jetpack' ), array( 'Jetpack_Form_Elements', 'radio' ), 'jetpack_settings', 'videopress', array(
+			'name'    => 'videopress-access',
+			'value'   => $videopress['access'],
+			'choices' => array(
+				''       => __( 'Do not allow other users to access my VideoPress library', 'jetpack' ),
+				'read'   => __( 'Allow users to access my videos', 'jetpack' ),
+				'edit'   => __( 'Allow users to access and edit my videos', 'jetpack' ),
+				'delete' => __( 'Allow users to access, edit, and delete my videos', 'jetpack' ),
+			),
+		) );
+		add_settings_field( 'videopress-upload', '', array( 'Jetpack_Form_Elements', 'checkbox' ), 'jetpack_settings', 'videopress', array(
+			'name'  => 'videopress-upload',
+			'value' => $videopress['allow-upload'],
+			'label' => __( 'Allow users to upload videos', 'jetpack' ),
+		) );
+		add_settings_field( 'videopress-freedom', __( 'Free formats', 'jetpack' ), array( 'Jetpack_Form_Elements', 'checkbox' ), 'jetpack_settings', 'videopress', array(
+			'name'        => 'videopress-freedom',
+			'value'       => $videopress['freedom'],
+			'label'       => __( 'Only display videos in free software formats.', 'jetpack' ),
+			'description' => __( 'Ogg file container with Theora video and Vorbis audio. Note that some browsers are unable to play free software video formats, including Internet Explorer and Safari.', 'jetpack' ),
+		) );
+		add_settings_field( 'videopress-hd', __( 'Default quality', 'jetpack' ), array( 'Jetpack_Form_Elements', 'checkbox' ), 'jetpack_settings', 'videopress', array(
+			'name'        => 'videopress-hd',
+			'value'       => $videopress['hd'],
+			'label'       => __( 'Display higher quality video by default.', 'jetpack' ),
+			'description' => __( 'This setting may be overridden for individual videos.', 'jetpack' ),
+		) );
+
+	}
+
+	function videopress_description() {
+		_e( 'Please note that the VideoPress module requires a WordPress.com account with an active <a href="http://store.wordpress.com/premium-upgrades/videopress/" target="_blank">VideoPress subscription</a>.</p>', 'jetpack' );
 	}
 
 	function admin_styles() {
@@ -123,7 +178,7 @@ class Jetpack_Modules extends WP_List_Table {
 			<form method="post" action="options.php">
 				<?php
 					settings_fields( 'jetpack_options' );
-					do_settings_sections( 'jetpack_options' );
+					do_settings_sections( 'jetpack_settings' );
 					submit_button();
 				?>
 			</form>

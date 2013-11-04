@@ -66,7 +66,7 @@ class Jetpack_Form_Elements {
 		<select name="<?php echo esc_attr( $args['name'] ); ?>">
 			<?php
 				foreach ( $args['choices'] as $value => $label ) :
-					printf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr( $value ), selected( $args['value']', $value, false ), $label );
+					printf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr( $value ), selected( $args['value'], $value, false ), $label );
 				endforeach;
 			?>
 		</select>
