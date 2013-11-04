@@ -20,6 +20,7 @@ class Jetpack_Modules extends WP_List_Table {
 		$this->jetpack = Jetpack::init();
 
 		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_admin_menu' ) );
+		add_filter( 'jetpack_modules_list_table_items', array( $this, 'filter_displayed_table_items' ) );
 	}
 
 	function jetpack_admin_menu( $jetpack_hook ) {
@@ -79,6 +80,7 @@ class Jetpack_Modules extends WP_List_Table {
 
 			<?php
 				$this->items = $this->get_modules();
+				$this->items = apply_filters( 'jetpack_modules_list_table_items', $this->items );
 				$this->_column_headers = array( $this->get_columns(), array(), array() );
 				$this->display();
 			?>
@@ -99,11 +101,27 @@ class Jetpack_Modules extends WP_List_Table {
 		<?php
 	}
 
+	function filter_displayed_table_items( $modules ) {
+		return array_filter( $modules, array( $this, 'is_module_displayed' ) );
+	}
+
 	static function is_module_available( $module ) {
 		if ( ! is_array( $module ) || empty( $module ) )
 			return false;
 
 		return ! ( $module['requires_connection'] && ! Jetpack::is_active() );
+	}
+
+	static function is_module_displayed( $module ) {
+		// Handle module tag based filtering.
+		if ( ! empty( $_REQUEST['module_tag'] ) ) {
+			$module_tag = sanitize_text_field( $_REQUEST['module_tag'] );
+			if ( ! in_array( $module_tag, $module['module_tags'] ) )
+				return false;
+		}
+
+		// If nothing rejected it, include it!
+		return true;
 	}
 
 	static function sort_requires_connection_last( $module1, $module2 ) {
