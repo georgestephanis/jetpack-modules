@@ -52,6 +52,10 @@ class Jetpack_Modules extends WP_List_Table {
 
 		uasort( $modules, array( $this->jetpack, 'sort_modules' ) );
 
+		if ( ! Jetpack::is_active() ) {
+			uasort( $modules, array( __CLASS__, 'sort_requires_connection_last' ) );
+		}
+
 		return $modules;
 	}
 
@@ -100,6 +104,17 @@ class Jetpack_Modules extends WP_List_Table {
 			return false;
 
 		return ! ( $module['requires_connection'] && ! Jetpack::is_active() );
+	}
+
+	static function sort_requires_connection_last( $module1, $module2 ) {
+		if ( $module1['requires_connection'] == $module2['requires_connection'] )
+			return 0;
+		if ( $module1['requires_connection'] )
+			return 1;
+		if ( $module2['requires_connection'] )
+			return -1;
+
+		return 0;
 	}
 
 	function get_columns() {
