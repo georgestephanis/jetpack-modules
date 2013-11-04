@@ -46,6 +46,8 @@ class Jetpack_Modules extends WP_List_Table {
 		add_action( "admin_print_styles-$hook",  array( $this->jetpack, 'admin_styles'    ) );
 		add_action( "admin_print_scripts-$hook", array( $this->jetpack, 'admin_scripts'   ) );
 
+		register_setting( 'jetpack_settings', 'videopress' );
+
 		$videopress = Jetpack_Options::get_option( 'videopress', array(
 			'blogs' => array(),
 			'blog_id' => 0,
@@ -178,10 +180,11 @@ class Jetpack_Modules extends WP_List_Table {
 
 			<form method="post" action="options.php">
 				<?php
-					settings_fields( 'jetpack_options' );
+					settings_fields( 'jetpack_settings' );
 					do_settings_sections( 'jetpack_settings' );
 					submit_button();
 				?>
+				<input type="hidden" name="_wp_http_referer" value="<?php menu_page_url( 'jetpack' ); ?>" />
 			</form>
 		</div>
 		<?php
