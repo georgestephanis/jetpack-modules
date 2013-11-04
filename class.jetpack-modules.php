@@ -129,7 +129,7 @@ class Jetpack_Modules extends WP_List_Table {
 	}
 
 	function column_cb( $item ) {
-		return sprintf( '<input type="checkbox" name="book[]" value="%s" />', $item['module'] );
+		return sprintf( '<input type="checkbox" name="modules[]" value="%s" />', $item['module'] );
 	}
 
 	function column_icon( $item ) {
