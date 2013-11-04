@@ -24,6 +24,14 @@ class Jetpack_Modules extends WP_List_Table {
 		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_admin_menu'    ) );
 		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_settings_menu' ) );
 		add_filter( 'jetpack_modules_list_table_items', array( $this, 'filter_displayed_table_items' ) );
+		add_action( 'jetpack_pre_activate_module',      array( $this, 'fix_redirect' ) );
+		add_action( 'jetpack_pre_deactivate_module',    array( $this, 'fix_redirect' ) );
+	}
+
+	function fix_redirect() {
+		if ( wp_get_referer() ) {
+			add_filter( 'wp_redirect', 'wp_get_referer' );
+		}
 	}
 
 	function jetpack_admin_menu() {
