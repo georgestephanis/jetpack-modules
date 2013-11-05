@@ -11,6 +11,7 @@ window.jetpackModules.views = (function( window, $, _, Backbone ) {
 			template : _.template( $('#Jetpack_Modules_List_Table_Template').html() ),
 
 			render : function() {
+				this.model.filter_and_sort();
 				this.$el.html( this.template( this.model.attributes ) );
 				return this;
 			},
