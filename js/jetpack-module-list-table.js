@@ -1,17 +1,17 @@
 
-(function( window, $, items, models, views ) {
+( function( window, $, items, models, views ) {
 	'use strict';
 
 	var modules, list_table, handle_module_tag_click;
 
-	modules = new models.Modules({
+	modules = new models.Modules( {
 		items : items
-	});
+	} );
 
-	list_table = new views.List_Table({
+	list_table = new views.List_Table( {
 		el    : '.wp-list-table.jetpack-modules tbody',
 		model : modules
-	});
+	} );
 
 	handle_module_tag_click = function( event ) {
 		$('.subsubsub').find('a[data-title="' + $(this).data('title') + '"]').addClass('current')
@@ -28,6 +28,6 @@
 	$( '.wp-list-table.jetpack-modules' ).on( 'click', '.more-info-link', function( event ){
 		event.preventDefault();
 		$( this ).siblings( '.more-info' ).toggle();
-	});
+	} );
 
-})( this, jQuery, window.jetpackModulesData, this.jetpackModules.models, this.jetpackModules.views );
+} ) ( this, jQuery, window.jetpackModulesData, this.jetpackModules.models, this.jetpackModules.views );
