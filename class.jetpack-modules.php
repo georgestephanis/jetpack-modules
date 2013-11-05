@@ -184,13 +184,13 @@ class Jetpack_Modules extends WP_List_Table {
 
 		<div class="wrap" id="jetpack-settings">
 
-			<h2 style="display: none"></h2> <!-- For WP JS message relocation -->
-
 			<div id="jp-header" class="small">
 				<div id="jp-clouds">
 					<h3><?php _e( 'Jetpack by WordPress.com', 'jetpack' ) ?></h3>
 				</div>
 			</div>
+
+			<h2 style="display: none"></h2> <!-- For WP JS message relocation -->
 
 			<?php
 				do_action( 'jetpack_notices' );
