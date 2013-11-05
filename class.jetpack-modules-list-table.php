@@ -17,9 +17,23 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 		$this->_column_headers = array( $this->get_columns(), array(), array() );
 
 		wp_register_script(
+			'models.jetpack-modules',
+			plugins_url( 'js/models.jetpack-modules.js', __FILE__ ),
+			'backbone',
+			JETPACK__VERSION
+		);
+		wp_register_script(
+			'views.jetpack-modules',
+			plugins_url( 'js/views.jetpack-modules.js', __FILE__ ),
+			'backbone',
+			JETPACK__VERSION
+		);
+		wp_register_script(
 			'jetpack-modules-list-table',
 			plugins_url( 'js/jetpack-module-list-table.js', __FILE__ ),
 			array(
+				'views.jetpack-modules',
+				'models.jetpack-modules',
 				'jquery',
 			),
 			JETPACK__VERSION,
