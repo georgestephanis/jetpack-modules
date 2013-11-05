@@ -225,6 +225,7 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 		} else {
 			do_action( 'jetpack_module_more_info_' . $item['module'] );
 		}
+		echo '</div>';
 		return ob_get_clean();
 	}
 
