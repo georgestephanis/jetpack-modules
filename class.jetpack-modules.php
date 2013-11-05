@@ -181,7 +181,6 @@ class Jetpack_Modules {
 			</form>
 
 			<script>
-			var jetpackModules = <?php echo json_encode( $list_table->all_items ); ?>;
 			jQuery(document).ready(function($){
 				$('.more-info-link').click(function(e){
 					e.preventDefault();

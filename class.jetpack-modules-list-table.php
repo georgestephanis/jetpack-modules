@@ -26,6 +26,8 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 			true
 		);
 
+		wp_localize_script( 'jetpack-modules-list-table', 'jetpackModules', array( 'modules' => $this->all_items ) );
+
 		wp_enqueue_script( 'jetpack-modules-list-table' );
 	}
 
