@@ -2,7 +2,9 @@
 ( function( window, $, items, models, views ) {
 	'use strict';
 
-	var modules, list_table, handle_module_tag_click;
+	var modules, list_table, handle_module_tag_click, $the_table;
+
+	$the_table = $('.wp-list-table.jetpack-modules');
 
 	modules = new models.Modules( {
 		items : items
@@ -22,10 +24,10 @@
 	}
 
 	$('.subsubsub a').on( 'click', { modules : modules }, handle_module_tag_click );
+	$the_table.on( 'click', '.module_tags a', { modules : modules }, handle_module_tag_click );
 
-	$('.wp-list-table.jetpack-modules').on( 'click', '.module_tags a', { modules : modules }, handle_module_tag_click );
 
-	$( '.wp-list-table.jetpack-modules' ).on( 'click', '.more-info-link', function( event ){
+	$the_table.on( 'click', '.more-info-link', function( event ) {
 		event.preventDefault();
 		$( this ).siblings( '.more-info' ).toggle();
 	} );
