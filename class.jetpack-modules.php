@@ -180,15 +180,6 @@ class Jetpack_Modules {
 				<?php $list_table->display(); ?>
 			</form>
 
-			<script>
-			jQuery(document).ready(function($){
-				$('.more-info-link').click(function(e){
-					e.preventDefault();
-					$(this).siblings('.more-info').toggle();
-				});
-			});
-			</script>
-
 		</div>
 
 		<?php
