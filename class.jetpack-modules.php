@@ -156,9 +156,6 @@ class Jetpack_Modules {
 
 		include_once( 'class.jetpack-modules-list-table.php' );
 		$list_table = new Jetpack_Modules_List_Table;
-		$list_table->items = $list_table->all_items = $list_table->get_modules();
-		$list_table->items = apply_filters( 'jetpack_modules_list_table_items', $list_table->items );
-		$list_table->_column_headers = array( $list_table->get_columns(), array(), array() );
 		?>
 
 		<div class="wrap" id="jetpack-settings">

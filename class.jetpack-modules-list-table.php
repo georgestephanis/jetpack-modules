@@ -11,7 +11,10 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 
 		$this->jetpack = Jetpack::init();
 
-		add_filter( 'jetpack_modules_list_table_items', array( $this, 'filter_displayed_table_items' ) );
+		$this->items = $this->all_items = $this->get_modules();
+		$this->items = $this->filter_displayed_table_items( $this->items );
+		$this->items = apply_filters( 'jetpack_modules_list_table_items', $this->items );
+		$this->_column_headers = array( $this->get_columns(), array(), array() );
 	}
 
 	function get_modules() {
