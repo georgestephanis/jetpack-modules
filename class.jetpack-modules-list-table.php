@@ -46,7 +46,14 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 		$module_tags_unique   = array_count_values( $module_tags );
 		ksort( $module_tags_unique );
 
-		$views = array();
+		$format  = '<a href="%3$s"%4$s>%1$s <span class="count">(%2$s)</span></a>';
+		$title   = __( 'All', 'jetpack' );
+		$count   = count( $modules );
+		$url     = remove_query_arg( 'module_tag' );
+		$current = empty( $_GET['module_tag'] ) ? ' class="current"' : '';
+		$views   = array(
+			'all' => sprintf( $format, $title, $count, $url, $current ),
+		);
 		foreach ( $module_tags_unique as $title => $count ) {
 			$key           = sanitize_title( $title );
 			$display_title = esc_html( wptexturize( $title ) );
@@ -54,7 +61,6 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 			$current       = '';
 			if ( ! empty( $_GET['module_tag'] ) && $title == $_GET['module_tag'] )
 				$current   = ' class="current"';
-			$format        = '<a href="%3$s"%4$s>%1$s <span class="count">(%2$s)</span></a>';
 			$views[ $key ] = sprintf( $format, $display_title, $count, $url, $current );
 		}
 		return $views;
