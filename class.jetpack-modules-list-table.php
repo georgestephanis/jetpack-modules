@@ -36,6 +36,27 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 		return $modules;
 	}
 
+	function get_views() {
+		$modules              = $this->get_modules();
+		$array_of_module_tags = wp_list_pluck( $modules, 'module_tags' );
+		$module_tags          = call_user_func_array( 'array_merge', $array_of_module_tags );
+		$module_tags_unique   = array_count_values( $module_tags );
+		ksort( $module_tags_unique );
+
+		$views = array();
+		foreach ( $module_tags_unique as $title => $count ) {
+			$key           = sanitize_title( $title );
+			$display_title = esc_html( wptexturize( $title ) );
+			$url           = add_query_arg( 'module_tag', urlencode( $title ) );
+			$current       = '';
+			if ( ! empty( $_GET['module_tag'] ) && $title == $_GET['module_tag'] )
+				$current   = ' class="current"';
+			$format        = '<a href="%3$s"%4$s>%1$s <span class="count">(%2$s)</span></a>';
+			$views[ $key ] = sprintf( $format, $display_title, $count, $url, $current );
+		}
+		return $views;
+	}
+
 	function filter_displayed_table_items( $modules ) {
 		return array_filter( $modules, array( $this, 'is_module_displayed' ) );
 	}

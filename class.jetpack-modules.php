@@ -173,6 +173,7 @@ class Jetpack_Modules {
 
 			<?php do_action( 'jetpack_notices' ); ?>
 
+			<?php $list_table->views(); ?>
 			<form method="get">
 				<input type="hidden" name="page" value="jetpack_modules" />
 				<?php if ( ! empty( $_GET['module_tag'] ) ) : ?>
