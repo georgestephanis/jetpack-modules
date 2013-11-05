@@ -16,3 +16,12 @@ function load_jetpack_modules_class() {
 		Jetpack_Modules::init();
 	}
 }
+
+/**
+ * @todo:
+ *  - Backbone: Update the URL when changing the filters … Backbone.history API?
+ *  - Actually ping the server with the request to activate or deactivate the modules.
+ *  - Implement sorting?
+ *  - ???
+ *  - PROFIT!
+ */
