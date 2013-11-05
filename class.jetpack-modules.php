@@ -21,8 +21,8 @@ class Jetpack_Modules extends WP_List_Table {
 	function __construct() {
 		$this->jetpack = Jetpack::init();
 
-		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_admin_menu'    ) );
-		add_action( 'jetpack_admin_menu', array( $this, 'jetpack_settings_menu' ) );
+		add_action( 'jetpack_admin_menu',               array( $this, 'jetpack_admin_menu' ) );
+		add_action( 'jetpack_admin_menu',               array( $this, 'jetpack_settings_menu' ) );
 		add_filter( 'jetpack_modules_list_table_items', array( $this, 'filter_displayed_table_items' ) );
 		add_action( 'jetpack_pre_activate_module',      array( $this, 'fix_redirect' ) );
 		add_action( 'jetpack_pre_deactivate_module',    array( $this, 'fix_redirect' ) );
