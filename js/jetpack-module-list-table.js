@@ -15,6 +15,8 @@
 		model : modules
 	} );
 
+	modules.trigger( 'change' );
+
 	handle_module_tag_click = function( event ) {
 		$('.subsubsub').find('a[data-title="' + $(this).data('title') + '"]').addClass('current')
 			.closest('li').siblings().find('a.current').removeClass('current');
