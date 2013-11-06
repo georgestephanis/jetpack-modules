@@ -11,7 +11,7 @@
 	} );
 
 	list_table = new views.List_Table( {
-		el    : '.wp-list-table.jetpack-modules tbody',
+		el    : '#the-list',
 		model : modules
 	} );
 

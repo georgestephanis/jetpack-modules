@@ -146,6 +146,10 @@ class Jetpack_Modules {
 	}
 
 	function admin_styles() {
+		if ( true ) {
+			wp_enqueue_style( 'jetpack-modules', plugins_url( 'jetpack-modules.cards.css', __FILE__ ) );
+			return;
+		}
 		wp_enqueue_style( 'jetpack-modules', plugins_url( 'jetpack-modules.css', __FILE__ ) );
 	}
 
@@ -154,8 +158,13 @@ class Jetpack_Modules {
 		include_once( JETPACK__PLUGIN_DIR . 'modules/module-info.php' );
 		add_thickbox();
 
-		include_once( 'class.jetpack-modules-list-table.php' );
-		$list_table = new Jetpack_Modules_List_Table;
+		if ( true ) {
+			include_once( 'class.jetpack-modules-cards.php' );
+			$list_table = new Jetpack_Modules_Cards;
+		} else {
+			include_once( 'class.jetpack-modules-list-table.php' );
+			$list_table = new Jetpack_Modules_List_Table;
+		}
 		?>
 		<div class="wrap" id="jetpack-settings">
 			<div id="module-settings-modal" style="display:none;">
