@@ -166,7 +166,7 @@ class Jetpack_Modules {
 		include_once( JETPACK__PLUGIN_DIR . 'modules/module-info.php' );
 		add_thickbox();
 
-		if ( true ) {
+		if ( empty( $_GET['list_table'] ) ) {
 			include_once( 'class.jetpack-modules-cards.php' );
 			$list_table = new Jetpack_Modules_Cards;
 		} else {
