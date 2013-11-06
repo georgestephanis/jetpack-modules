@@ -74,6 +74,9 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 						<% } else { %>
 							<span class='activate'><a href="<?php echo admin_url( 'admin.php' ); ?>?page=jetpack&#038;action=activate&#038;module=<%= item.module %>&#038;_wpnonce=<%= item.activate_nonce %>"><?php _e( 'Activate', 'jetpack' ); ?></a></span>
 						<% } %>
+						<% if ( item.configurable ) { %>
+							<span class='configure'><%= item.configurable %></span>
+						<% } %>
 						</div>
 					</td>
 					<td class='module_tags column-module_tags'>
@@ -283,6 +286,9 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 				'jetpack_deactivate-' . $item['module']
 			);
 			$actions['delete'] = sprintf( '<a href="%s">%s</a>', esc_url( $url ), esc_html__( 'Deactivate', 'jetpack' ) );
+		}
+		if ( ! empty( $item['configurable'] ) ) {
+			$actions['configure'] = $item['configurable'];
 		}
 
 		return wptexturize( $item['name'] ) . $this->row_actions( $actions );
