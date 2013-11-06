@@ -47,7 +47,7 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 			 */
 			deactivate_module : function( module_slug ) {
 				var modules = _.clone( this.get( 'raw' ) );
-				if ( modules[ module_slug ] && true == modules[ module_slug ].activated ) {
+				if ( modules[ module_slug ] && modules[ module_slug ].activated ) {
 					modules[ module_slug ].activated = false;
 
 					/* @todo: Update server via ajaxy goodness here. */
