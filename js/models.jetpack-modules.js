@@ -28,13 +28,13 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 
 			/**
 			* Updates the status in the modules.raw dataset.
-			*/
+			* /
 			activate_module : function( module_slug ) {
 				var modules = _.clone( this.get( 'raw' ) );
 				if ( modules[ module_slug ] && ! modules[ module_slug ].activated ) {
 					modules[ module_slug ].activated = true;
 
-					/* @todo: Update server via ajaxy goodness here. */
+					// @todo: Update server via ajaxy goodness here.
 
 					this.set( 'raw', modules );
 					this.trigger( 'change' );
@@ -44,13 +44,13 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 
 			/**
 			 * Updates the status in the modules.raw dataset.
-			 */
+			 * /
 			deactivate_module : function( module_slug ) {
 				var modules = _.clone( this.get( 'raw' ) );
 				if ( modules[ module_slug ] && modules[ module_slug ].activated ) {
 					modules[ module_slug ].activated = false;
 
-					/* @todo: Update server via ajaxy goodness here. */
+					// @todo: Update server via ajaxy goodness here.
 
 					this.set( 'raw', modules );
 					this.trigger( 'change' );
