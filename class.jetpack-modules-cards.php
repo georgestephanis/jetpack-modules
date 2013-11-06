@@ -65,6 +65,7 @@ class Jetpack_Modules_Cards extends WP_List_Table {
 				$module_array['activate_nonce']    = wp_create_nonce( 'jetpack_activate-' . $module );
 				$module_array['unavailable']       = ! self::is_module_available( $module_array );
 				$module_array['short_description'] = apply_filters( 'jetpack_short_module_description', $module_array['description'], $module );
+				$module_array['configure_url'] = Jetpack::module_configuration_url( $module );
 
 				ob_start();
 				do_action( 'jetpack_learn_more_button_' . $module );

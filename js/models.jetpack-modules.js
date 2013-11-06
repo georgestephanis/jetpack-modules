@@ -65,7 +65,8 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 				var modules = this.get( 'raw' );
 				if ( modules[ module_slug ] ) {
 					var module = modules[ module_slug ];
-					console.log(module.configure_url);
+					var configure_url = module.configure_url + " #wpbody-content";
+					$( "#module-settings-modal .settings" ).load( configure_url );
 				}
 			},
 

@@ -168,7 +168,9 @@ class Jetpack_Modules {
 		?>
 		<div class="wrap" id="jetpack-settings">
 			<div id="module-settings-modal" style="display:none;">
-			     <!-- Here goes the settings -->
+				<div class="settings">
+				     <!-- Here goes the settings -->
+				</div>
 			</div>
 			<div id="jp-header" class="small">
 				<div id="jp-clouds">
