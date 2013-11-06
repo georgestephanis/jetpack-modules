@@ -146,7 +146,7 @@ class Jetpack_Modules {
 	}
 
 	function admin_styles() {
-		if ( true ) {
+		if ( empty( $_GET['list_table'] ) ) {
 			wp_enqueue_style( 'jetpack-modules', plugins_url( 'jetpack-modules.cards.css', __FILE__ ) );
 			$tags = __( 'Tags:', 'jetpack' );
 			$css = "
