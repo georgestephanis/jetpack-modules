@@ -1,0 +1,62 @@
+
+.jetpack-module {
+	width: 275px;
+	padding: 15px;
+	box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.2 );
+	background: #fff;
+	border: 0;
+	border-top: .75em solid #ddd;
+	height: 200px;
+}
+
+.jetpack-module.active {
+	border-top-color: #0a0;
+}
+
+.jetpack-module.unavailable {
+	border-top-color: #fff;
+	opacity: 0.5;
+}
+
+.jetpack-module .icon {
+	width: auto;
+	padding: 0;
+	margin: 0 0 1em 1em;
+	float: right;
+}
+
+.jetpack-module .module-image {
+	border-radius: 3px;
+	margin: 0;
+}
+
+.jetpack-module > h3 {
+	font-size: 1.8em;
+}
+
+.jetpack-module .row-actions {
+	overflow: hidden;
+}
+
+.jetpack-module:hover .row-actions {
+	visibility: visible;
+}
+
+.jetpack-module.unavailable .row-actions {
+	display: none;
+}
+
+.jetpack-module .row-actions li {
+	float: left;
+	margin-right: 0.5em;
+}
+
+.jetpack-module .more-info {
+	display: none;
+	margin: 0 0 5px;
+	background: none;
+	background-color: transparent !important;
+	border: none !important;
+	height: auto;
+	box-shadow: none !important;
+}
