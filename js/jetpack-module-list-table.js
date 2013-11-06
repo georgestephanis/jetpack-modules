@@ -28,17 +28,7 @@
 	}
 	$('.subsubsub a').on( 'click', { modules : modules }, handle_module_tag_click );
 	$the_table.on( 'click', '.module_tags a', { modules : modules }, handle_module_tag_click );
-/*
-	$the_table.on( 'click', '.row-actions .activate a', { modules : modules }, function( event ) {
-		event.preventDefault();
-		event.data.modules.activate_module( $(this).closest('.jetpack-module').attr('id') );
-	} );
 
-	$the_table.on( 'click', '.row-actions .delete a', { modules : modules }, function( event ) {
-		event.preventDefault();
-		event.data.modules.deactivate_module( $(this).closest('.jetpack-module').attr('id') );
-	} );
-*/
 	$the_table.on( 'click', '.more-info-link', function( event ) {
 		event.preventDefault();
 		$( document.body ).addClass('jetpack-lb').append('<div class="jetpack-light-box-wrap"><div class="jetpack-light-box"></div></div>');
