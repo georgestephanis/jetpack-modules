@@ -196,7 +196,7 @@ class Jetpack_Modules {
 				<?php if ( ! empty( $_GET['module_tag'] ) ) : ?>
 					<input type="hidden" name="module_tag" value="<?php echo esc_attr( $_GET['module_tag'] ); ?>" />
 				<?php endif; ?>
-				<?php $list_table->search_box( __( 'Search', 'jetpack' ), 'search_modules' ); ?>
+				<?php # $list_table->search_box( __( 'Search', 'jetpack' ), 'search_modules' ); ?>
 				<?php $list_table->display(); ?>
 			</form>
 
