@@ -157,9 +157,10 @@ class Jetpack_Modules {
 		include_once( 'class.jetpack-modules-list-table.php' );
 		$list_table = new Jetpack_Modules_List_Table;
 		?>
-
 		<div class="wrap" id="jetpack-settings">
-
+			<div id="module-settings-modal" style="display:none;">
+			     <!-- Here goes the settings -->
+			</div>
 			<div id="jp-header" class="small">
 				<div id="jp-clouds">
 					<h3><?php _e( 'Jetpack by WordPress.com', 'jetpack' ) ?></h3>

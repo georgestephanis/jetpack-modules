@@ -19,13 +19,13 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 		wp_register_script(
 			'models.jetpack-modules',
 			plugins_url( 'js/models.jetpack-modules.js', __FILE__ ),
-			'backbone',
+			array( 'backbone', 'underscore'),
 			JETPACK__VERSION
 		);
 		wp_register_script(
 			'views.jetpack-modules',
 			plugins_url( 'js/views.jetpack-modules.js', __FILE__ ),
-			'backbone',
+			array( 'backbone', 'underscore'),
 			JETPACK__VERSION
 		);
 		wp_register_script(
@@ -57,7 +57,7 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 						<input type="checkbox" name="modules[]" value="<%= item.module %>" />
 					</th>
 					<td class='icon column-icon'>
-						<a href="#TB_inline?width=600&height=550&inlineId=more-info-<%= item.module %>" class="thickbox">
+						<a href="#TB_inline?width=600&height=550&inlineId=module-settings-modal" class="thickbox">
 							<div class="module-image">
 								<p>
 									<span class="module-image-badge"></span>
@@ -245,7 +245,7 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 		$badge_text = $free_text = '';
 		ob_start();
 		?>
-		<a href="#TB_inline?width=600&height=550&inlineId=more-info-<?php echo $item['module']; ?>" class="thickbox">
+		<a href="#TB_inline?width=600&height=550&inlineId=more-info-module-settings-modal" class="thickbox">
 			<div class="module-image">
 				<p><span class="module-image-badge"><?php echo $badge_text; ?></span><span class="module-image-free" style="display: none"><?php echo $free_text; ?></span></p>
 			</div>
