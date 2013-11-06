@@ -41,7 +41,13 @@
 */
 	$the_table.on( 'click', '.more-info-link', function( event ) {
 		event.preventDefault();
-		$( this ).closest( '.jetpack-module' ).find( '.more-info' ).toggle();
+		$( document.body ).addClass('jetpack-lb').append('<div class="jetpack-light-box-wrap"><div class="jetpack-light-box"></div></div>');
+		$('.jetpack-light-box').html( $( this ).closest( '.jetpack-module' ).find( '.more-info' ).html() );
+		$('.jetpack-light-box-wrap').on( 'click', function( event ) {
+			if ( $( event.target ).hasClass( 'jetpack-light-box-wrap' ) ) {
+				$( document.body ).removeClass( 'jetpack-lb' ).children( '.jetpack-light-box-wrap' ).remove();
+			}
+		} );
 	} );
 
 	$the_table.on( 'click', 'a.thickbox', { modules : modules }, function( event ) {
