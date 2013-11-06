@@ -68,6 +68,10 @@
 
 .jetpack-module .row-actions {
 	overflow: hidden;
+	position: absolute;
+	bottom: 10px;
+	left: 15px;
+	margin: 0;
 }
 
 .jetpack-module:hover .row-actions {
