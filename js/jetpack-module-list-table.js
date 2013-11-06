@@ -37,7 +37,7 @@
 
 	$the_table.on( 'click', '.more-info-link', function( event ) {
 		event.preventDefault();
-		$( this ).siblings( '.more-info' ).toggle();
+		$( this ).closest( '.jetpack-module' ).find( '.more-info' ).toggle();
 	} );
 
 	$the_table.on( 'click', 'a.thickbox', { modules : modules }, function( event ) {
