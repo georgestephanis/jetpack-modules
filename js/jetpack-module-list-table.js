@@ -19,6 +19,10 @@
 		$('.subsubsub').find('a[data-title="' + $(this).data('title') + '"]').addClass('current')
 			.closest('li').siblings().find('a.current').removeClass('current');
 
+		if ( window.history.replaceState ) {
+			window.history.replaceState( {}, $(this).data('title'), $(this).attr('href') );
+		}
+
 		event.preventDefault();
 		event.data.modules.filter_and_sort();
 	}
