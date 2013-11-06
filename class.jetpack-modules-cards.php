@@ -68,9 +68,10 @@ class Jetpack_Modules_Cards extends WP_List_Table {
 
 				ob_start();
 				do_action( 'jetpack_learn_more_button_' . $module );
-				$module_array['learn_more_button'] = ob_get_clean();
-				$module_array['learn_more_button'] = str_replace( '-secondary', '', $module_array['learn_more_button'] );
-				$module_array['learn_more_button'] = str_replace( 'button', 'button-small button', $module_array['learn_more_button'] );
+				$learn_more_button = ob_get_clean();
+				$learn_more_button = str_replace( array( 'button-secondary ', 'button ' ), '', $learn_more_button );
+
+				$module_array['short_description'] = str_replace( '</p>', ' ' . $learn_more_button . '</p>', $module_array['short_description'] );
 
 				ob_start();
 				if ( $this->jetpack->is_active() && has_action( 'jetpack_module_more_info_connected_' . $module ) ) {
@@ -209,14 +210,13 @@ class Jetpack_Modules_Cards extends WP_List_Table {
 						<%= item.short_description %>
 					</div>
 					<ul class="row-actions">
-						<li class="learn-more"><%= item.learn_more_button %></li>
 						<% if ( item.configurable ) { %>
 							<li class='configure'><%= item.configurable %></li>
 						<% } %>
 						<% if ( item.activated ) { %>
-							<li class='delete'><a href="<?php echo admin_url( 'admin.php' ); ?>?page=jetpack&#038;action=deactivate&#038;module=<%= item.module %>&#038;_wpnonce=<%= item.deactivate_nonce %>"><?php _e( 'Deactivate', 'jetpack' ); ?></a></li>
+							<li class='delete'><a href="<?php echo admin_url( 'admin.php' ); ?>?page=jetpack&#038;action=deactivate&#038;module=<%= item.module %>&#038;_wpnonce=<%= item.deactivate_nonce %>" class="button button-small"><?php _e( 'Deactivate', 'jetpack' ); ?></a></li>
 						<% } else if ( ! item.unavailable ) { %>
-							<li class='activate'><a href="<?php echo admin_url( 'admin.php' ); ?>?page=jetpack&#038;action=activate&#038;module=<%= item.module %>&#038;_wpnonce=<%= item.activate_nonce %>"><?php _e( 'Activate', 'jetpack' ); ?></a></li>
+							<li class='activate'><a href="<?php echo admin_url( 'admin.php' ); ?>?page=jetpack&#038;action=activate&#038;module=<%= item.module %>&#038;_wpnonce=<%= item.activate_nonce %>" class="button button-small"><?php _e( 'Activate', 'jetpack' ); ?></a></li>
 						<% } %>
 					</ul>
 					<div id="more-info-<%= item.module %>" class="more-info">
@@ -257,10 +257,9 @@ class Jetpack_Modules_Cards extends WP_List_Table {
 			<?php endforeach; ?>
 			</ul>
 			<div class='description column-description'>
-				<?php echo $item['short_description'] ?>
+				<?php echo $item['short_description']; ?>
 			</div>
 			<ul class="row-actions">
-				<li class="learn-more"><?php echo $item['learn_more_button'] ?></li>
 				<?php if ( $item['configurable'] ) : ?>
 					<li class='configure'><?php echo $item['configurable']; ?></li>
 				<?php endif; ?>
