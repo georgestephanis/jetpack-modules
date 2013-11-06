@@ -58,6 +58,17 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 				return this;
 			},
 
+			/**
+			 * Load the module modal.
+			 */
+			load_modal : function( module_slug ) {
+				var modules = this.get( 'raw' );
+				if ( modules[ module_slug ] ) {
+					var module = modules[ module_slug ];
+					console.log(module.configure_url);
+				}
+			},
+
 			initialize : function() {
 				this.set( 'raw', this.get( 'items' ) );
 			}

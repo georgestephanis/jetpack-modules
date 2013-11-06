@@ -40,4 +40,8 @@
 		$( this ).siblings( '.more-info' ).toggle();
 	} );
 
+	$the_table.on( 'click', 'a.thickbox', { modules : modules }, function( event ) {
+		event.data.modules.load_modal( $(this).closest('tr').attr('id') );
+	} );
+
 } ) ( this, jQuery, window.jetpackModulesData, this.jetpackModules.models, this.jetpackModules.views );
