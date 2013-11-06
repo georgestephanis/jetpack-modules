@@ -81,7 +81,7 @@ class Jetpack_Modules_List_Table extends WP_List_Table {
 					</td>
 					<td class='module_tags column-module_tags'>
 					<% _.each( item.module_tags, function( tag, tag_key, tag_list ) { %>
-						<a href="<?php echo admin_url( 'admin.php' ); ?>?page=jetpack_modules&module_tag=<%= encodeURIComponent( tag ) %>" data-title="<%- tag %>"><%= tag %></a><% if ( tag_key + 1 < tag_list.length ) { %>, <% } %>
+						<a href="<?php echo admin_url( 'admin.php' ); ?>?page=jetpack_modules&#038;list_table=true&#038;module_tag=<%= encodeURIComponent( tag ) %>" data-title="<%- tag %>"><%= tag %></a><% if ( tag_key + 1 < tag_list.length ) { %>, <% } %>
 					<% } ); %>
 					</td>
 					<td class='description column-description'>
