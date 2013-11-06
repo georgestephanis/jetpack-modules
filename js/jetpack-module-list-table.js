@@ -27,17 +27,17 @@
 
 	$the_table.on( 'click', '.row-actions .activate a', { modules : modules }, function( event ) {
 		event.preventDefault();
-		event.data.modules.activate_module( $(this).closest('tr').attr('id') );
+		event.data.modules.activate_module( $(this).closest('.jetpack-module').attr('id') );
 	} );
 
 	$the_table.on( 'click', '.row-actions .delete a', { modules : modules }, function( event ) {
 		event.preventDefault();
-		event.data.modules.deactivate_module( $(this).closest('tr').attr('id') );
+		event.data.modules.deactivate_module( $(this).closest('.jetpack-module').attr('id') );
 	} );
 
 	$the_table.on( 'click', '.more-info-link', function( event ) {
 		event.preventDefault();
-		$( this ).siblings( '.more-info' ).toggle();
+		$( this ).closest( '.jetpack-module' ).find( '.more-info' ).toggle();
 	} );
 
 	$the_table.on( 'click', 'a.thickbox', { modules : modules }, function( event ) {

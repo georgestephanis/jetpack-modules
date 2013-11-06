@@ -148,6 +148,14 @@ class Jetpack_Modules {
 	function admin_styles() {
 		if ( true ) {
 			wp_enqueue_style( 'jetpack-modules', plugins_url( 'jetpack-modules.cards.css', __FILE__ ) );
+			$tags = __( 'Tags:', 'jetpack' );
+			$css = "
+			.jetpack-module .module_tags:before {
+				content: '{$tags}';
+				display: inline;
+			}
+			";
+			wp_add_inline_style( 'jetpack-modules', $css );
 			return;
 		}
 		wp_enqueue_style( 'jetpack-modules', plugins_url( 'jetpack-modules.css', __FILE__ ) );

@@ -1,4 +1,8 @@
 
+.subsubsub {
+	width: calc( 100% - 270px );
+}
+
 .jetpack-module {
 	width: 275px;
 	padding: 15px;
@@ -34,6 +38,34 @@
 	font-size: 1.8em;
 }
 
+.jetpack-module .module_tags {
+	
+}
+
+.jetpack-module .module_tags li {
+	display: inline;
+}
+
+.jetpack-module .module_tags li:after {
+	content: ',';
+	display: inline;
+}
+
+.jetpack-module .module_tags li:last-child:after {
+	content: '';
+	display: none;
+}
+
+.jetpack-module .more-info {
+	display: none;
+	margin: 0 0 5px;
+	background: none;
+	background-color: transparent !important;
+	border: none !important;
+	height: auto;
+	box-shadow: none !important;
+}
+
 .jetpack-module .row-actions {
 	overflow: hidden;
 }
@@ -49,14 +81,4 @@
 .jetpack-module .row-actions li {
 	float: left;
 	margin-right: 0.5em;
-}
-
-.jetpack-module .more-info {
-	display: none;
-	margin: 0 0 5px;
-	background: none;
-	background-color: transparent !important;
-	border: none !important;
-	height: auto;
-	box-shadow: none !important;
 }
