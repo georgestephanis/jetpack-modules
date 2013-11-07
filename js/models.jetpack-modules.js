@@ -61,15 +61,53 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 			/**
 			 * Load the module modal.
 			 */
-			load_modal : function( module_slug ) {
+			render_configure : function( module_slug ) {
 				var modules = this.get( 'raw' );
 				if ( modules[ module_slug ] ) {
 					var module = modules[ module_slug ];
-					var configure_url = module.configure_url + " #wpbody-content";
-					$( "#module-settings-modal .settings" ).load( configure_url );
+					var settings_template = _.template( $( '#jetpack-configure-module-template' ).html() );
+					module.settings_html = settings_template( { module: module } );
+					var modal = $( _.template( $( '#jetpack-modal-template' ).html() )( { content: module.settings_html }) );
+					$( document.body ).addClass('jetpack-lb').append( modal );
+					//$('.jetpack-light-box').html( $( this ).closest( '.jetpack-module' ).find( '.more-info' ).html() );
+					
+					$('.jetpack-light-box-wrap').on( 'click', function( event ) {
+						if ( $( event.target ).hasClass( 'jetpack-light-box-wrap' ) ) {
+							$( document.body ).removeClass( 'jetpack-lb' ).children( '.jetpack-light-box-wrap' ).remove();
+						}
+					} );
+					if ( ! module.settings ) {
+						modal.find( '.jetpack-module-settings' ).load( 
+							module.configure_url + ' #wpbody-content .wrap form',
+							function( response, status, xhr ) {
+								if ( status != 'error' ) {
+									module.settings = response;
+									modal.find( '.jetpack-module-settings form' ).submit( function(e) {
+									    var postData = $(this).serializeArray();
+									    var formURL = ( $(this).attr("action") ) ? $(this).attr("action") : module.configure_url ;
+									    $.ajax(
+									    {
+									        url : formURL,
+									        type: "POST",
+									        data : postData,
+									        success:function(data, textStatus, jqXHR) 
+									        {
+									            console.log( 'Settings changed' );
+									        },
+									        error: function(jqXHR, textStatus, errorThrown) 
+									        {
+									            console.log( 'Settings not changed :(' );
+									        }
+									    });
+									    e.preventDefault();
+									});
+								} 
+							}
+						);
+					}
 				}
 			},
-
+			
 			initialize : function() {
 				this.set( 'raw', this.get( 'items' ) );
 			}

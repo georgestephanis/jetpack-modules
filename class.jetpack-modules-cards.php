@@ -228,6 +228,30 @@ class Jetpack_Modules_Cards extends WP_List_Table {
 			});
 			%>
 		</script>
+
+		<?php
+		self::modal_template();
+		self::configure_module_template();
+	}
+	
+	function modal_template() {
+		?>
+		<script id="jetpack-modal-template" type="text/template">
+			<div class="jetpack-light-box-wrap">
+				<div class="jetpack-light-box"><%= content %></div>
+			</div>
+		</script>
+		<?php
+	}
+
+	function configure_module_template() {
+		?>
+		<script id="jetpack-configure-module-template" type="text/template">
+			<h2><%= module.name %></h2>
+			<div class="jetpack-module-settings">
+				<%= module.settings %>
+			</div>
+		</script>
 		<?php
 	}
 

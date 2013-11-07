@@ -42,8 +42,9 @@
 		} );
 	} );
 
-	$the_table.on( 'click', 'a.thickbox', { modules : modules }, function( event ) {
-		event.data.modules.load_modal( $(this).closest('.jetpack-module').attr('id') );
+	$the_table.on( 'click', '.configure', { modules : modules }, function( event ) {
+		event.preventDefault();
+		event.data.modules.render_configure( $(this).closest('.jetpack-module').attr('id') );
 	} );
 
 } ) ( this, jQuery, window.jetpackModulesData, this.jetpackModules.models, this.jetpackModules.views );

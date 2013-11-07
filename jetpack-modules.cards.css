@@ -125,6 +125,7 @@
 	border: 3em solid #fff;
 	background: #fff;
 	box-shadow: 0 7px 20px rgba( 0, 0, 0, 0.3 );
+	overflow: auto;
 }
 
 .jetpack-light-box div.jp-info-img {
