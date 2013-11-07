@@ -249,7 +249,19 @@ class Jetpack_Modules_Cards extends WP_List_Table {
 		<script id="jetpack-configure-module-template" type="text/template">
 			<h2><%= module.name %></h2>
 			<div class="jetpack-module-settings">
-				<%= module.settings %>
+				<?php _e( 'Loading Settings' ); ?>
+			</div>
+		</script>
+		<?php
+	}
+
+	function jetpack_message_template() {
+		?>
+		<script id="jetpack-message-template" type="text/template">
+			<div id="message" class="jetpack-message">
+				<div class="squeezer">
+					<h4><strong><%= title %></strong> <%= description %></h4>
+				</div>
 			</div>
 		</script>
 		<?php
