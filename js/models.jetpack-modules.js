@@ -76,35 +76,33 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 							$( document.body ).removeClass( 'jetpack-lb' ).children( '.jetpack-light-box-wrap' ).remove();
 						}
 					} );
-					if ( ! module.settings ) {
-						modal.find( '.jetpack-module-settings' ).load( 
-							module.configure_url + ' #wpbody-content .wrap form',
-							function( response, status, xhr ) {
-								if ( status != 'error' ) {
-									module.settings = response;
-									modal.find( '.jetpack-module-settings form' ).submit( function(e) {
-									    var postData = $(this).serializeArray();
-									    var formURL = ( $(this).attr("action") ) ? $(this).attr("action") : module.configure_url ;
-									    $.ajax(
-									    {
-									        url : formURL,
-									        type: "POST",
-									        data : postData,
-									        success:function(data, textStatus, jqXHR) 
-									        {
-									            console.log( 'Settings changed' );
-									        },
-									        error: function(jqXHR, textStatus, errorThrown) 
-									        {
-									            console.log( 'Settings not changed :(' );
-									        }
-									    });
-									    e.preventDefault();
-									});
-								} 
-							}
-						);
-					}
+					modal.find( '.jetpack-module-settings' ).load( 
+						module.configure_url + ' #wpbody-content .wrap form',
+						function( response, status, xhr ) {
+							if ( status != 'error' ) {
+								module.settings = response;
+								modal.find( '.jetpack-module-settings form' ).submit( function(e) {
+								    var postData = $(this).serializeArray();
+								    var formURL = ( $(this).attr("action") ) ? $(this).attr("action") : module.configure_url ;
+								    $.ajax(
+								    {
+								        url : formURL,
+								        type: "POST",
+								        data : postData,
+								        success:function(data, textStatus, jqXHR) 
+								        {
+								            console.log( 'Settings changed' );
+								        },
+								        error: function(jqXHR, textStatus, errorThrown) 
+								        {
+								            console.log( 'Settings not changed :(' );
+								        }
+								    });
+								    e.preventDefault();
+								});
+							} 
+						}
+					);
 				}
 			},
 			
