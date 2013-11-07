@@ -70,10 +70,12 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 					var modal = $( _.template( $( '#jetpack-modal-template' ).html() )( { content: module.settings_html }) );
 					$( document.body ).addClass('jetpack-lb').append( modal );
 					//$('.jetpack-light-box').html( $( this ).closest( '.jetpack-module' ).find( '.more-info' ).html() );
-					
+					modal.close = function() {
+						$( document.body ).removeClass( 'jetpack-lb' ).children( '.jetpack-light-box-wrap' ).remove();
+					}
 					$('.jetpack-light-box-wrap').on( 'click', function( event ) {
 						if ( $( event.target ).hasClass( 'jetpack-light-box-wrap' ) ) {
-							$( document.body ).removeClass( 'jetpack-lb' ).children( '.jetpack-light-box-wrap' ).remove();
+							modal.close();
 						}
 					} );
 					modal.find( '.jetpack-module-settings' ).load( 
@@ -91,13 +93,15 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 								        data : postData,
 								        success:function(data, textStatus, jqXHR) 
 								        {
-								            console.log( 'Settings changed' );
+								            var message = $( _.template( $( '#jetpack-message-template' ).html() )( { title: module.name, description: 'Settings Saved' }) );
+								            $( '#jetpack-settings h2' ).first().after( message );
 								        },
 								        error: function(jqXHR, textStatus, errorThrown) 
 								        {
-								            console.log( 'Settings not changed :(' );
+								            console.log( 'Error: Settings not changed :(' , errorThrown );
 								        }
 								    });
+						            modal.close();
 								    e.preventDefault();
 								});
 							} 

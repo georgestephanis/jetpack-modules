@@ -232,6 +232,7 @@ class Jetpack_Modules_Cards extends WP_List_Table {
 		<?php
 		self::modal_template();
 		self::configure_module_template();
+		self::jetpack_message_template();
 	}
 	
 	function modal_template() {
