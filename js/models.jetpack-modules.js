@@ -82,8 +82,8 @@ window.jetpackModules.models = (function( window, $, _, Backbone ) {
 						module.configure_url + ' #wpbody-content .wrap form',
 						function( response, status, xhr ) {
 							if ( status != 'error' ) {
-								module.settings = response;
-								modal.find( '.jetpack-module-settings form' ).submit( function(e) {
+								$( '.jetpack-module-settings form #' + module.module ).siblings().not('.submit').hide();
+								modal.find( '.jetpack-module-settings form' ).submit( function( e ) {
 								    var postData = $(this).serializeArray();
 								    var formURL = ( $(this).attr("action") ) ? $(this).attr("action") : module.configure_url ;
 								    $.ajax(
